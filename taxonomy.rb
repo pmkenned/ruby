@@ -9,14 +9,18 @@ class Organism
         @live = true
         puts "new organism!"
     end
+
+    def die()
+        @live = false
+    end
 end
 
 class Animal < Organism
 
     def Animal.reproduce(male_parent, female_parent)
-        if (male_parent.sex != "male" or female_parent.sex != "female")
+        if (male_parent.sex != "male" || female_parent.sex != "female")
             puts "error: must have a male and female parent"
-        elsif (not male_parent.live) or (not female_parent.live)
+        elsif (!male_parent.live) || (!female_parent.live)
             puts "error: both parents must be alive"
         else
             offspring = Animal.new("male", male_parent, female_parent)
@@ -39,13 +43,28 @@ end
 
 class Human < Animal
 
-    def initialize()
-        super
-        @possessions = []
+    def initialize(*args)
+        super(*args)
+        @possessions = {}
     end
 
     def acquire(thing)
-        @possessions << thing
+        @possessions[thing] = true
+    end
+
+    def surrender(thing)
+        @possessions.delete(thing)
+    end
+
+    def die()
+
+        @possessions.each do |item|
+            @offspring[0].acquire(item)
+            surrender(item)
+        end
+
+        super
+
     end
 
 end
@@ -55,9 +74,11 @@ mary = Human.new("mary", "female")
 
 bob.acquire("house")
 bob.acquire("car")
+#puts bob.inspect
 
-#chuck = Human.reproduce(bob, mary)
+chuck = Human.reproduce(bob, mary)
+bob.die
 
-puts bob.inspect
+#puts bob.inspect
 #puts mary.inspect
-#puts chuck.inspect
+puts chuck.inspect
