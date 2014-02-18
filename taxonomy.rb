@@ -37,31 +37,7 @@ class Animal < Organism
 
 end
 
-class Mammal < Animal
-end
-
-class Feline < Mammal
-end
-
-class Canine < Mammal
-end
-
-class Fox < Canine
-end
-
-class Dog < Canine
-end
-
-class Cat < Feline
-end
-
-class Tiger < Feline
-end
-
-class Primate < Mammal
-end
-
-class Human < Primate
+class Human < Animal
 
     def initialize()
         super
